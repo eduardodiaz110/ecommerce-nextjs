@@ -38,10 +38,10 @@ export default function ClientAddProduct({
 
   return (
     <>
-      <Stack height={"100dvh"}>
-        <CustomHeader title="Nuevo Articulo" />
+      <form onSubmit={handleSubmit}>
+        <Stack height={"100dvh"}>
+          <CustomHeader title="Nuevo Articulo" />
 
-        <form onSubmit={handleSubmit}>
           <Stack spacing={1} padding={1.5}>
             <CustomTextField
               text="Nombre*"
@@ -71,26 +71,18 @@ export default function ClientAddProduct({
               disabled
             />
           </Stack>
-        </form>
 
-        <Stack
-          height={"76px"}
-          justifyContent={"center"}
-          bgcolor={theme.palette.primary.main}
-          padding={1.5}
-          marginTop={"auto"}
-        >
-          <Link
-            href={`/`}
-            style={{
-              textDecoration: "none",
-              color: theme.palette.text.primary,
-            }}
+          <Stack
+            height={"76px"}
+            justifyContent={"center"}
+            bgcolor={theme.palette.primary.main}
+            padding={1.5}
+            marginTop={"auto"}
           >
             <CustomButton text="Guardar Articulo" type="submit" />
-          </Link>
+          </Stack>
         </Stack>
-      </Stack>
+      </form>
     </>
   );
 }
