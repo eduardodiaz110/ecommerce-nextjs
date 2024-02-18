@@ -16,6 +16,7 @@ interface ClientAddProductProps {
 export default function ClientAddProduct({
   createProduct,
 }: ClientAddProductProps): React.JSX.Element {
+  const pageHeight = window.innerHeight;
   const theme = useTheme();
   const router = useRouter();
 
@@ -33,13 +34,13 @@ export default function ClientAddProduct({
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     createProduct(formData);
-    router.back();
+    router.push("/");
   };
 
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <Stack minHeight={"100vh"}>
+        <Stack minHeight={pageHeight}>
           <CustomHeader title="Nuevo Articulo" />
 
           <Stack spacing={1} padding={1.5}>
@@ -79,7 +80,15 @@ export default function ClientAddProduct({
             padding={1.5}
             marginTop={"auto"}
           >
-            <CustomButton text="Guardar Articulo" type="submit" />
+            <Link
+              href={`/`}
+              style={{
+                textDecoration: "none",
+                color: theme.palette.text.primary,
+              }}
+            >
+              <CustomButton text="Guardar Articulo" type="submit" />
+            </Link>
           </Stack>
         </Stack>
       </form>

@@ -16,10 +16,11 @@ export default function ClientEditProductPage({
   product,
 }: ClientEditProductPageProps) {
   const [isEditing, setIsEditing] = useState(false);
+  const pageHeight = window.innerHeight;
 
   return (
     <>
-      <Stack minHeight={"100vh"}>
+      <Stack minHeight={pageHeight}>
         <CustomHeader title="Editar Articulo" />
 
         {product && product.price ? (

@@ -32,23 +32,69 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ title }) => {
         width={"100%"}
       >
         {!isHomePage && (
-          <Stack
-            width={"15%"}
-            alignItems={"center"}
-            border={"none"}
-            justifyContent={"center"}
-            boxShadow={"0px 0px 0px 0px"}
-          >
-            <Button
+          <Stack width={"15%"} alignItems={"center"} justifyContent={"center"}>
+            <button
               onClick={handleGoBack}
-              variant="contained"
-              color="primary"
-              sx={{
-                boxShadow: "none",
+              style={{
+                backgroundColor: "transparent",
+                border: "none",
+                zIndex: 10,
               }}
+              // variant="text"
+              // sx={{
+              //   justifyContent: "center",
+              //   alignItems: "center",
+              //   color: "#000",
+              //   width: "50px", // Ajusta el ancho según tus necesidades
+              //   height: "50px", // Ajusta la altura según tus necesidades
+              //   borderRadius: "50%",
+              //   boxShadow: "none",
+              //   backgroundColor: "transparent",
+              //   padding: "0px",
+              //   "&:hover": {
+              //     backgroundColor: "transparent",
+              //     boxShadow: "none",
+              //   },
+              //   "&:active": {
+              //     boxShadow: "none",
+              //     backgroundColor: "transparent",
+              //   },
+              //   "&:focus": {
+              //     boxShadow: "none",
+              //     backgroundColor: "transparent",
+              //   },
+              // }}
             >
-              <ArrowBackIcon />
-            </Button>
+              <div
+                style={{
+                  backgroundColor: "#000",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  padding: "2px",
+                  borderRadius: "50%",
+                }}
+              >
+                <div
+                  style={{
+                    backgroundColor: "#fff",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    padding: "5px",
+                    borderRadius: "50%",
+                  }}
+                >
+                  <ArrowBackIcon
+                    sx={{
+                      padding: "0px",
+                      margin: "0px",
+                      fontSize: "24px",
+                    }}
+                  />
+                </div>
+              </div>
+            </button>
           </Stack>
         )}
         <Stack

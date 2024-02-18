@@ -17,6 +17,7 @@ export default function ClientHomePage({
 }: ClientHomePageProps): React.JSX.Element {
   const theme = useTheme();
   const [products, setProducts] = React.useState<Product[]>([]);
+  const pageHeight = typeof window !== "undefined" ? window.innerHeight : 0;
 
   useEffect(() => {
     const getProducts = async () => {
@@ -28,7 +29,7 @@ export default function ClientHomePage({
 
   return (
     <>
-      <Stack minHeight={"100vh"}>
+      <Stack minHeight={pageHeight}>
         <CustomHeader title="Artículos" />
 
         <Stack spacing={1} padding={1.5}>

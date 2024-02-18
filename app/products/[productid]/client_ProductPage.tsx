@@ -4,10 +4,11 @@ import CustomButton from "@/src/shared/components/CustomButton";
 import CustomTextField from "@/src/shared/components/CustomTextField";
 import CustomHeader from "@/src/shared/components/Header";
 import theme from "@/src/theme";
-import { Link, Stack, Typography } from "@mui/material";
+import { Dialog, Stack, Typography } from "@mui/material";
 import { Client } from "aws-amplify/api";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import Link from "next/link";
 
 interface ClientProductPageProps {
   product: Product | null | undefined;
@@ -18,10 +19,65 @@ export default function ClientProductPage({
   product,
   deleteProduct,
 }: ClientProductPageProps) {
+  const pageHeight = window.innerHeight;
   const router = useRouter();
+
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+
+  const DeleteDialog = () => {
+    return (
+      <>
+        <Stack
+          height={"35px"}
+          bgcolor={theme.palette.primary.main}
+          justifyContent={"center"}
+          alignItems={"left"}
+          padding={1.5}
+        >
+          <Typography>Eliminar Articulo</Typography>
+        </Stack>
+        <Stack padding={1.5} minHeight={"50px"}>
+          <Typography>
+            ¿Estás seguro que deseas eliminar este producto?
+          </Typography>
+        </Stack>
+        <Stack>
+          <Stack
+            direction="row"
+            justifyContent={"right"}
+            padding={1.5}
+            spacing={1}
+          >
+            <CustomButton
+              text="Si"
+              delete
+              sx={{
+                borderRadius: "800px",
+                width: "25%",
+              }}
+              onClick={() => {
+                deleteProduct(product?.id || "");
+                router.push("/");
+              }}
+            />
+            <CustomButton
+              text="No"
+              onClick={() => setOpenDeleteDialog(false)}
+              sx={{
+                backgroundColor: theme.palette.error.main,
+                borderRadius: "800px",
+                width: "25%",
+              }}
+            />
+          </Stack>
+        </Stack>
+      </>
+    );
+  };
+
   return (
     <>
-      <Stack minHeight={"100vh"}>
+      <Stack minHeight={pageHeight}>
         <CustomHeader title="Ver Articulo" />
 
         {product && product.price ? (
@@ -85,12 +141,17 @@ export default function ClientProductPage({
             </Link>
           </Stack>
           <Stack width={"50%"} padding={1}>
+            <Dialog
+              open={openDeleteDialog}
+              onClose={() => setOpenDeleteDialog(false)}
+            >
+              <DeleteDialog />
+            </Dialog>
             <CustomButton
+              delete
               text="Eliminar"
-              sx={{ backgroundColor: theme.palette.error.main }}
               onClick={() => {
-                deleteProduct(product?.id || "");
-                router.push("/");
+                setOpenDeleteDialog(true);
               }}
             />
           </Stack>

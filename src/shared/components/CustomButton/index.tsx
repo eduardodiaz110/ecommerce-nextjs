@@ -4,15 +4,34 @@ import theme from "../../../theme";
 
 interface CustomButtonProps {
   text: string;
+  delete?: boolean; // Nuevo prop opcional
 }
 
 const CustomButton = forwardRef(
   (
-    { text, ...ButtonProps }: CustomButtonProps & ButtonProps,
+    { text, delete: isDelete, ...ButtonProps }: CustomButtonProps & ButtonProps,
     ref: ForwardedRef<HTMLButtonElement>
   ) => {
     return (
-      <StyledButton {...ButtonProps} ref={ref}>
+      <StyledButton
+        {...ButtonProps}
+        ref={ref}
+        sx={{
+          backgroundColor: isDelete
+            ? theme.palette.error.main
+            : theme.palette.success.main,
+          "&:hover": {
+            backgroundColor: isDelete
+              ? theme.palette.error.dark
+              : theme.palette.success.dark,
+          },
+          "&:active": {
+            backgroundColor: isDelete
+              ? theme.palette.error.light
+              : theme.palette.success.light,
+          },
+        }}
+      >
         <Typography
           color={theme.palette.text.secondary}
           fontSize={"16px"}
@@ -29,7 +48,6 @@ const CustomButton = forwardRef(
 CustomButton.displayName = "CustomButton";
 
 const StyledButton = styled(Button)(({ theme }) => ({
-  backgroundColor: theme.palette.success.main,
   borderRadius: 10,
   height: "39px",
   width: "100%",
