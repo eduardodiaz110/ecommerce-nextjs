@@ -24,7 +24,7 @@ export default function ClientHomePage({
       setProducts(products);
     };
     getProducts();
-  }, []);
+  }, [fetchProducts]);
 
   return (
     <>
