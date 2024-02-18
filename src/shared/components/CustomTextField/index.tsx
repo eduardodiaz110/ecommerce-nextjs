@@ -49,6 +49,8 @@ const CustomTextField = forwardRef(
   }
 );
 
+CustomTextField.displayName = "CustomTextField";
+
 const StyledTextField = styled(TextField)(({ theme }) => ({
   width: "100%",
   "& .MuiInputBase-input.Mui-disabled": {

@@ -26,6 +26,8 @@ const CustomButton = forwardRef(
   }
 );
 
+CustomButton.displayName = "CustomButton";
+
 const StyledButton = styled(Button)(({ theme }) => ({
   backgroundColor: theme.palette.success.main,
   borderRadius: 10,
