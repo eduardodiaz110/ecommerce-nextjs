@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-ecommercenextjs-dev-205935-authRole",
+      "UnauthRoleArn": "arn:aws:iam::767397973928:role/amplify-ecommercenextjs-dev-205935-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::767397973928:role/amplify-ecommercenextjs-dev-205935-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-ecommercenextjs-dev-205935-deployment",
+      "UnauthRoleName": "amplify-ecommercenextjs-dev-205935-unauthRole",
+      "StackName": "amplify-ecommercenextjs-dev-205935",
+      "StackId": "arn:aws:cloudformation:us-east-1:767397973928:stack/amplify-ecommercenextjs-dev-205935/96a26450-cd40-11ee-8b16-128840b76b63",
+      "AmplifyAppId": "d2pbjka7l3geed"
+    },
+    "categories": {
+      "api": {
+        "ecommercenextjs": {}
+      }
+    }
+  }
+}
