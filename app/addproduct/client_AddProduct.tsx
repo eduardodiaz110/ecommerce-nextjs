@@ -7,7 +7,7 @@ import theme from "@/src/theme";
 import { Button, Stack, useTheme } from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface ClientAddProductProps {
   createProduct: (formData: FormData) => Promise<void>;
@@ -16,7 +16,6 @@ interface ClientAddProductProps {
 export default function ClientAddProduct({
   createProduct,
 }: ClientAddProductProps): React.JSX.Element {
-  const pageHeight = window.innerHeight;
   const theme = useTheme();
   const router = useRouter();
 
@@ -39,10 +38,10 @@ export default function ClientAddProduct({
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <Stack minHeight={pageHeight}>
-          <CustomHeader title="Nuevo Articulo" />
+      <Stack minHeight={"100dvh"}>
+        <CustomHeader title="Nuevo Articulo" />
 
+        <form onSubmit={handleSubmit}>
           <Stack spacing={1} padding={1.5}>
             <CustomTextField
               text="Nombre*"
@@ -90,8 +89,8 @@ export default function ClientAddProduct({
               <CustomButton text="Guardar Articulo" type="submit" />
             </Link>
           </Stack>
-        </Stack>
-      </form>
+        </form>
+      </Stack>
     </>
   );
 }

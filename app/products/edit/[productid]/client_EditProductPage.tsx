@@ -6,7 +6,7 @@ import CustomHeader from "@/src/shared/components/Header";
 import theme from "@/src/theme";
 import { Stack, Typography } from "@mui/material";
 import { Client } from "aws-amplify/api";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface ClientEditProductPageProps {
   product: Product | null | undefined;
@@ -15,12 +15,9 @@ interface ClientEditProductPageProps {
 export default function ClientEditProductPage({
   product,
 }: ClientEditProductPageProps) {
-  const [isEditing, setIsEditing] = useState(false);
-  const pageHeight = window.innerHeight;
-
   return (
     <>
-      <Stack minHeight={pageHeight}>
+      <Stack minHeight={"100dvh"}>
         <CustomHeader title="Editar Articulo" />
 
         {product && product.price ? (

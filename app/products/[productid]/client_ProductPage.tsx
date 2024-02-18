@@ -7,7 +7,7 @@ import theme from "@/src/theme";
 import { Dialog, Stack, Typography } from "@mui/material";
 import { Client } from "aws-amplify/api";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 
 interface ClientProductPageProps {
@@ -19,7 +19,6 @@ export default function ClientProductPage({
   product,
   deleteProduct,
 }: ClientProductPageProps) {
-  const pageHeight = window.innerHeight;
   const router = useRouter();
 
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
@@ -77,7 +76,7 @@ export default function ClientProductPage({
 
   return (
     <>
-      <Stack minHeight={pageHeight}>
+      <Stack minHeight={"100dvh"}>
         <CustomHeader title="Ver Articulo" />
 
         {product && product.price ? (
