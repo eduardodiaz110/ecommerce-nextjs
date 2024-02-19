@@ -39,7 +39,6 @@ export default function ClientSinginPage(): React.JSX.Element {
   };
 
   const handleSignIn = async (event: any) => {
-    setIsLoadingPage(true);
     try {
       const { nextStep } = await signIn({
         username: formData.email,
@@ -48,10 +47,10 @@ export default function ClientSinginPage(): React.JSX.Element {
       if (nextStep.signInStep === "DONE") {
         setIsAuthenticated(true);
       }
-      router.push("/");
     } catch (error) {
       console.log("error signing up:", error);
     } finally {
+      router.push("/");
       setIsLoadingPage(false);
     }
   };
@@ -93,7 +92,14 @@ export default function ClientSinginPage(): React.JSX.Element {
           padding={1.5}
           marginTop={"auto"}
         >
-          <CustomButton text="Acceder" onClick={handleSignIn} />
+          <CustomButton
+            text="Acceder"
+            disabled={isLoadingPage}
+            onClick={() => {
+              setIsLoadingPage(true);
+              handleSignIn(formData);
+            }}
+          />
         </Stack>
       </Stack>
     </>

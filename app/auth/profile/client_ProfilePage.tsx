@@ -24,7 +24,7 @@ export default function ClientProfilePage() {
   return (
     <>
       <Stack height={"100dvh"}>
-        <CustomHeader title="Iniciar Sesión" />
+        <CustomHeader title="Perfil" />
 
         <Stack flex={1} spacing={1} padding={1.5}>
           <Typography>

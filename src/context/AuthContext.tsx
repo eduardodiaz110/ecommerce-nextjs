@@ -12,6 +12,7 @@ Amplify.configure(config);
 interface AuthContextType {
   isAuthenticated: boolean | null;
   setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean | null>>;
+  fetchSession: () => Promise<true | false | undefined>;
 }
 
 interface AuthProviderProps {
@@ -21,18 +22,35 @@ interface AuthProviderProps {
 export const AuthContext = createContext<AuthContextType>({
   isAuthenticated: null,
   setIsAuthenticated: () => {},
+  fetchSession: async () => {
+    return false;
+  },
 });
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+
+  //   const fetchSession = async () => {
+  //     try {
+  //       const session = await fetchAuthSession().catch((error) => {
+  //         console.log("error", error);
+  //       });
+  //       console.log(session);
+  //       setIsAuthenticated(session ? true : false);
+  //     } catch (error) {
+  //       setIsAuthenticated(false);
+  //     }
+  //     };
 
   const fetchSession = async () => {
     try {
       const session = await fetchAuthSession().catch((error) => {
         console.log("error", error);
       });
-      console.log(session);
-      setIsAuthenticated(session ? true : false);
+      if (session) {
+        return true;
+      }
+      //   setIsAuthenticated(session ? true : false);
     } catch (error) {
       setIsAuthenticated(false);
     }
@@ -40,7 +58,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   useEffect(() => {
     console.log("isAuthenticated", isAuthenticated);
-    fetchSession();
   }, [isAuthenticated]);
 
   useEffect(() => {
@@ -49,7 +66,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
+    <AuthContext.Provider
+      value={{ isAuthenticated, setIsAuthenticated, fetchSession }}
+    >
       {isAuthenticated === false ? <ClientSinginPage /> : <>{children}</>}
     </AuthContext.Provider>
   );
