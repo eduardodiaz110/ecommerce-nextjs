@@ -19,12 +19,6 @@ export default async function Home() {
     return data.listProducts.items;
   };
 
-  // const { data, errors } = await cookiesClient.graphql({
-  //   query: queries.listProducts,
-  // });
-
-  // const products = data.listProducts.items;
-
   return (
     <>
       <ClientHomePage fetchProducts={fetchProducts} />

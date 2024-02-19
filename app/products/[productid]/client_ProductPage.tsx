@@ -11,17 +11,27 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 
 interface ClientProductPageProps {
-  product: Product | null | undefined;
+  fetchProduct: () => Promise<Product | null>;
   deleteProduct: (id: string) => Promise<void>;
 }
 
 export default function ClientProductPage({
-  product,
+  fetchProduct,
   deleteProduct,
 }: ClientProductPageProps) {
   const router = useRouter();
 
+  const [product, setProduct] = useState<Product | null>();
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+
+  const fetch = async () => {
+    const product = await fetchProduct();
+    setProduct(product);
+  };
+
+  useEffect(() => {
+    fetch();
+  }, [fetchProduct]);
 
   const DeleteDialog = () => {
     return (
@@ -129,15 +139,10 @@ export default function ClientProductPage({
           flexDirection={"row"}
         >
           <Stack width={"50%"} padding={1}>
-            <Link
-              href={`/products/edit/${product?.id}`}
-              style={{
-                textDecoration: "none",
-                color: theme.palette.text.primary,
-              }}
-            >
-              <CustomButton text="Editar" />
-            </Link>
+            <CustomButton
+              text="Editar"
+              onClick={() => router.push(`/products/edit/${product?.id}`)}
+            />
           </Stack>
           <Stack width={"50%"} padding={1}>
             <Dialog

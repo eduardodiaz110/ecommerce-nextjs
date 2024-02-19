@@ -4,59 +4,94 @@ import CustomButton from "@/src/shared/components/CustomButton";
 import CustomTextField from "@/src/shared/components/CustomTextField";
 import CustomHeader from "@/src/shared/components/Header";
 import theme from "@/src/theme";
-import { Stack, Typography } from "@mui/material";
-import { Client } from "aws-amplify/api";
+import { Stack } from "@mui/material";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 interface ClientEditProductPageProps {
-  product: Product | null | undefined;
+  fetchProduct: () => Promise<Product | null>;
+  updateProduct: (formData: FormData) => Promise<void>;
 }
 
 export default function ClientEditProductPage({
-  product,
+  updateProduct,
+  fetchProduct,
 }: ClientEditProductPageProps) {
+  const router = useRouter();
+  const [product, setProduct] = useState<Product | null>();
+  const [formData, setFormData] = useState(new FormData());
+
+  const name = product?.name || "";
+  const price = product?.price || 0;
+
+  const fetch = async () => {
+    const product = await fetchProduct();
+    formData.set("id", product?.id || "");
+    formData.set("name", product?.name || "");
+    formData.set("price", product?.price?.toString() || "");
+    formData.set("priceIva", (product?.price || 0 * 1.16).toFixed(2));
+    setProduct(product);
+  };
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    formData.set(name, value);
+    setProduct((prevProduct) => {
+      if (prevProduct) {
+        return { ...prevProduct, [name]: value };
+      }
+      return prevProduct;
+    });
+  };
+
+  const handleSubmit = async (event: any) => {
+    await updateProduct(formData);
+    router.push("/");
+  };
+
+  useEffect(() => {
+    fetch();
+  }, [fetchProduct]);
+
   return (
     <>
       <Stack minHeight={"100dvh"}>
         <CustomHeader title="Editar Articulo" />
 
-        {product && product.price ? (
-          <Stack spacing={1} padding={1.5}>
+        <Stack padding={1.5}>
+          {product && (
             <Stack spacing={1} padding={1.5}>
               <CustomTextField
                 text="Nombre*"
                 name="name"
-                //   onChange={handleChange}
-                value={product?.name}
+                onChange={handleChange}
+                defaultValue={name}
               />
 
               <CustomTextField
                 text="Precio*"
                 name="price"
                 type="number"
-                defaultValue={0}
-                //   onChange={handleChange}
-                value={product?.price.toString() || "0"}
+                onChange={handleChange}
+                defaultValue={price}
               />
 
               <CustomTextField
                 text="IVA 16*"
                 type="number"
-                value={(product?.price * 0.16 || 0).toFixed(2)}
+                value={(price * 0.16).toFixed(2)}
                 disabled
               />
 
               <CustomTextField
                 text="Precio con IVA*"
                 type="number"
-                value={(product?.price * 1.16 || 0).toFixed(2)}
+                value={(price * 1.16).toFixed(2)}
                 disabled
               />
             </Stack>
-          </Stack>
-        ) : (
-          <Typography>No se encontró el producto</Typography>
-        )}
+          )}
+        </Stack>
 
         <Stack
           height={"76px"}
@@ -67,7 +102,7 @@ export default function ClientEditProductPage({
           marginTop={"auto"}
           flexDirection={"row"}
         >
-          <CustomButton text="Guardar cambios" />
+          <CustomButton text="Guardar cambios" onClick={handleSubmit} />
         </Stack>
       </Stack>
     </>

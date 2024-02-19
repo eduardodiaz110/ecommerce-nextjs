@@ -17,12 +17,21 @@ export default async function ProductPage({
 }: {
   params: { productid: string };
 }) {
-  const { data, errors } = await cookiesClient.graphql({
-    query: getProduct,
-    variables: { id: params.productid },
-  });
+  async function fetchProduct() {
+    "use server";
+    const { data, errors } = await cookiesClient.graphql({
+      query: getProduct,
+      variables: { id: params.productid },
+    });
 
-  const product = data.getProduct;
+    return data.getProduct || null;
+  }
+  // const { data, errors } = await cookiesClient.graphql({
+  //   query: getProduct,
+  //   variables: { id: params.productid },
+  // });
+
+  // const product = data.getProduct;
 
   const deleteProduct = async (id: string) => {
     "use server";
@@ -36,7 +45,10 @@ export default async function ProductPage({
 
   return (
     <>
-      <ClientProductPage product={product} deleteProduct={deleteProduct} />
+      <ClientProductPage
+        fetchProduct={fetchProduct}
+        deleteProduct={deleteProduct}
+      />
     </>
   );
 }

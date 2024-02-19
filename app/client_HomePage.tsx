@@ -19,11 +19,11 @@ export default function ClientHomePage({
   const [products, setProducts] = React.useState<Product[]>([]);
 
   useEffect(() => {
-    const getProducts = async () => {
+    const fetch = async () => {
       const products = await fetchProducts();
       setProducts(products);
     };
-    getProducts();
+    fetch();
   }, [fetchProducts]);
 
   return (
