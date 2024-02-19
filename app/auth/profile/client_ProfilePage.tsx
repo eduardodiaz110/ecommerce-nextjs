@@ -18,7 +18,9 @@ export default function ClientProfilePage() {
     try {
       await signOut();
       setIsAuthenticated(false);
-      sessionStorage.setItem("isAuthenticated", "false");
+      if (typeof window !== "undefined") {
+        sessionStorage.setItem("isAuthenticated", "false");
+      }
     } catch (error) {
       console.log("error signing out:", error);
     } finally {

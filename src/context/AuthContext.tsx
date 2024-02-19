@@ -28,7 +28,9 @@ export const AuthContext = createContext<AuthContextType>({
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   const isAuthenticatedSessionStorage =
-    sessionStorage.getItem("isAuthenticated") || "false";
+    typeof window !== "undefined"
+      ? sessionStorage.getItem("isAuthenticated") || "false"
+      : "false";
 
   const fetchSession = async () => {
     try {
@@ -37,11 +39,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       });
       if (session) {
         setIsAuthenticated(true);
-        sessionStorage.setItem("isAuthenticated", "true");
+        if (typeof window !== "undefined") {
+          sessionStorage.setItem("isAuthenticated", "true");
+        }
         return true;
       } else {
         setIsAuthenticated(false);
-        sessionStorage.setItem("isAuthenticated", "false");
+        if (typeof window !== "undefined") {
+          sessionStorage.setItem("isAuthenticated", "false");
+        }
         return false;
       }
     } catch (error) {

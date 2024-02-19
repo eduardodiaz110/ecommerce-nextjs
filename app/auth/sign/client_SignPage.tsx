@@ -60,7 +60,9 @@ export default function ClientSignPage({}): React.JSX.Element {
       });
       if (nextStep.signInStep === "DONE") {
         setIsAuthenticated(true);
-        sessionStorage.setItem("isAuthenticated", "true");
+        if (typeof window !== "undefined") {
+          sessionStorage.setItem("isAuthenticated", "true");
+        }
         router.push("/");
       }
     } catch (error) {
@@ -85,7 +87,9 @@ export default function ClientSignPage({}): React.JSX.Element {
       });
       if (userId) {
         setIsAuthenticated(true);
-        sessionStorage.setItem("isAuthenticated", "true");
+        if (typeof window !== "undefined") {
+          sessionStorage.setItem("isAuthenticated", "true");
+        }
         router.push("/");
       }
     } catch (error) {
