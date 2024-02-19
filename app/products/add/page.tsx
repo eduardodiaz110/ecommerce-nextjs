@@ -1,7 +1,7 @@
 import { generateServerClientUsingCookies } from "@aws-amplify/adapter-nextjs/api";
 import config from "@/src/amplifyconfiguration.json";
 import { cookies } from "next/headers";
-import * as mutations from "../../src/graphql/mutations";
+import * as mutations from "../../../src/graphql/mutations";
 import { revalidatePath } from "next/cache";
 import ClientAddProduct from "./client_AddProduct";
 import { useRouter } from "next/navigation";

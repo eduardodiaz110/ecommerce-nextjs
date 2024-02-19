@@ -72,7 +72,7 @@ export default function ClientHomePage({
           padding={1.5}
           marginTop={"auto"}
         >
-          <Link href="/addproduct" as={"/addproduct"}>
+          <Link href="/products/add" as={"/products/add"}>
             <CustomButton text="Add Product" />
           </Link>
         </Stack>
