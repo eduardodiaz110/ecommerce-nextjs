@@ -1,6 +1,7 @@
 "use client";
 import { Product } from "@/src/API";
 import CustomButton from "@/src/shared/components/CustomButton";
+import CustomDeleteDialog from "@/src/shared/components/CustomDeleteDialog";
 import CustomTextField from "@/src/shared/components/CustomTextField";
 import CustomHeader from "@/src/shared/components/Header";
 import theme from "@/src/theme";
@@ -32,57 +33,6 @@ export default function ClientProductPage({
   useEffect(() => {
     fetch();
   }, [fetchProduct]);
-
-  const DeleteDialog = () => {
-    return (
-      <>
-        <Stack
-          height={"35px"}
-          bgcolor={theme.palette.primary.main}
-          justifyContent={"center"}
-          alignItems={"left"}
-          padding={1.5}
-        >
-          <Typography>Eliminar Articulo</Typography>
-        </Stack>
-        <Stack padding={1.5} minHeight={"50px"}>
-          <Typography>
-            ¿Estás seguro que deseas eliminar este producto?
-          </Typography>
-        </Stack>
-        <Stack>
-          <Stack
-            direction="row"
-            justifyContent={"right"}
-            padding={1.5}
-            spacing={1}
-          >
-            <CustomButton
-              text="Si"
-              delete
-              sx={{
-                borderRadius: "800px",
-                width: "25%",
-              }}
-              onClick={() => {
-                deleteProduct(product?.id || "");
-                router.push("/");
-              }}
-            />
-            <CustomButton
-              text="No"
-              onClick={() => setOpenDeleteDialog(false)}
-              sx={{
-                backgroundColor: theme.palette.error.main,
-                borderRadius: "800px",
-                width: "25%",
-              }}
-            />
-          </Stack>
-        </Stack>
-      </>
-    );
-  };
 
   return (
     <>
@@ -152,12 +102,17 @@ export default function ClientProductPage({
             />
           </Stack>
           <Stack width={"50%"} padding={1}>
-            <Dialog
+            <CustomDeleteDialog
+              title="Eliminar Articulo"
+              text="¿Estás seguro que deseas eliminar este articulo?"
               open={openDeleteDialog}
               onClose={() => setOpenDeleteDialog(false)}
-            >
-              <DeleteDialog />
-            </Dialog>
+              onAccept={() => {
+                deleteProduct(product?.id || "");
+                router.push("/");
+              }}
+            />
+
             <CustomButton
               delete
               text="Eliminar"

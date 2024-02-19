@@ -35,21 +35,21 @@ const theme = createTheme({
       styleOverrides: {
         h1: {
           fontWeight: 500,
-          fontSize: "96px",
+          fontSize: "32px",
           "@media (max-width:600px)": {
             fontSize: "16px",
           },
         },
         h2: {
           fontWeight: 400,
-          fontSize: "60px",
+          fontSize: "16px",
           "@media (max-width:600px)": {
             fontSize: "14px",
           },
         },
         h3: {
           fontWeight: 400,
-          fontSize: "48px",
+          fontSize: "12px",
           "@media (max-width:600px)": {
             fontSize: "12px",
           },

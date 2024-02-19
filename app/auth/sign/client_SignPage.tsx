@@ -60,9 +60,8 @@ export default function ClientSignPage({}): React.JSX.Element {
       });
       if (nextStep.signInStep === "DONE") {
         setIsAuthenticated(true);
-        if (typeof window !== "undefined") {
-          sessionStorage.setItem("isAuthenticated", "true");
-        }
+        localStorage.setItem("isAuthenticated", "true");
+
         router.push("/");
       }
     } catch (error) {
@@ -87,9 +86,8 @@ export default function ClientSignPage({}): React.JSX.Element {
       });
       if (userId) {
         setIsAuthenticated(true);
-        if (typeof window !== "undefined") {
-          sessionStorage.setItem("isAuthenticated", "true");
-        }
+        localStorage.setItem("isAuthenticated", "true");
+
         router.push("/");
       }
     } catch (error) {
@@ -101,7 +99,7 @@ export default function ClientSignPage({}): React.JSX.Element {
   return (
     <>
       <Stack height={"100dvh"}>
-        <CustomHeader title={isSignUp ? "Registrarse" : "Iniciar Sesión"} />
+        <CustomHeader title={"Inicia"} />
 
         <Stack flex={1} padding={1.5}>
           {!isLoadingPage ? (

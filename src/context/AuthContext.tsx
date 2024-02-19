@@ -4,6 +4,7 @@ import { fetchAuthSession, getCurrentUser } from "aws-amplify/auth";
 import config from "@/src/amplifyconfiguration.json";
 import { Amplify } from "aws-amplify";
 import ClientSignPage from "@/app/auth/sign/client_SignPage";
+import LoadingPage from "../shared/components/LoadingPage";
 
 Amplify.configure(config);
 
@@ -27,11 +28,10 @@ export const AuthContext = createContext<AuthContextType>({
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
-  const isAuthenticatedSessionStorage =
-    typeof window !== "undefined"
-      ? sessionStorage.getItem("isAuthenticated") || "false"
-      : "false";
-
+  // const isAuthenticateddtorage =
+  //   typeof window === "undefined"
+  //     ? null
+  //     : sessionStorage.getItem("isAuthenticated") === "true";
   const fetchSession = async () => {
     try {
       const session = await fetchAuthSession().catch((error) => {
@@ -39,15 +39,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       });
       if (session) {
         setIsAuthenticated(true);
-        if (typeof window !== "undefined") {
-          sessionStorage.setItem("isAuthenticated", "true");
-        }
+        localStorage.setItem("isAuthenticated", "true");
+
         return true;
       } else {
         setIsAuthenticated(false);
-        if (typeof window !== "undefined") {
-          sessionStorage.setItem("isAuthenticated", "false");
-        }
+        localStorage.setItem("isAuthenticated", "false");
+
         return false;
       }
     } catch (error) {
@@ -57,7 +55,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   useEffect(() => {
     console.log("isAuthenticated", isAuthenticated);
-    console.log("isAuthenticatedSessionStorage", isAuthenticatedSessionStorage);
+    // console.log("isAuthenticatedlocalStorage", isAuthenticatedLocalStorage);
   }, [isAuthenticated]);
 
   useEffect(() => {
@@ -68,10 +66,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     <AuthContext.Provider
       value={{ isAuthenticated, setIsAuthenticated, fetchSession }}
     >
-      {isAuthenticatedSessionStorage === "false" ? (
+      {isAuthenticated === false ? (
         <ClientSignPage />
-      ) : (
+      ) : isAuthenticated === true ? (
         <>{children}</>
+      ) : (
+        <LoadingPage />
       )}
     </AuthContext.Provider>
   );

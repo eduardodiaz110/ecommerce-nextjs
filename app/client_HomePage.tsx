@@ -69,7 +69,7 @@ export default function ClientHomePage({
           marginTop={"auto"}
         >
           <Link href="/products/add" as={"/products/add"}>
-            <CustomButton text="Add Product" />
+            <CustomButton text="Nuevo artículo" />
           </Link>
         </Stack>
       </Stack>

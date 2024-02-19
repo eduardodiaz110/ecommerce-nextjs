@@ -1,5 +1,6 @@
 "use client";
 import { Product } from "@/src/API";
+import CustomAlertDialog from "@/src/shared/components/CustomAlertDialog";
 import CustomButton from "@/src/shared/components/CustomButton";
 import CustomTextField from "@/src/shared/components/CustomTextField";
 import CustomHeader from "@/src/shared/components/Header";
@@ -21,6 +22,12 @@ export default function ClientEditProductPage({
   const [isLoadingPage, setIsLoadingPage] = useState(true);
   const [product, setProduct] = useState<Product | null>();
   const [formData, setFormData] = useState(new FormData());
+  const [alertDialog, setAlertDialog] = useState({
+    open: false,
+    title: "",
+    text: "",
+    onClose: () => {},
+  });
 
   const name = product?.name || "";
   const price = product?.price || 0;
@@ -47,8 +54,43 @@ export default function ClientEditProductPage({
   };
 
   const handleSubmit = async (event: any) => {
+    if (
+      !formData.get("name") ||
+      (formData.get("name")?.toString().length || 0) > 200
+    ) {
+      setAlertDialog({
+        open: true,
+        title: "Error",
+        text: "Por favor, complete el campo nombre correctamente (máximo 200 caracteres).",
+        onClose: () => {
+          setAlertDialog({ ...alertDialog, open: false });
+        },
+      });
+      return;
+    }
+
+    if (price === 0 || isNaN(price) || price <= 0 || price > 99999) {
+      setAlertDialog({
+        open: true,
+        title: "Error",
+        text: "Ingresa un precio válido. Debe estar entre 1 y 99,999.",
+        onClose: () => {
+          setAlertDialog({ ...alertDialog, open: false });
+        },
+      });
+      return;
+    }
+
     await updateProduct(formData);
-    router.push("/");
+    setAlertDialog({
+      open: true,
+      title: "Éxito",
+      text: "El producto ha sido actualizado.",
+      onClose: () => {
+        setAlertDialog({ ...alertDialog, open: false });
+        router.replace(`/products/${product?.id}`);
+      },
+    });
   };
 
   useEffect(() => {
@@ -116,6 +158,12 @@ export default function ClientEditProductPage({
           <CustomButton text="Guardar cambios" onClick={handleSubmit} />
         </Stack>
       </Stack>
+      <CustomAlertDialog
+        open={alertDialog.open}
+        onClose={alertDialog.onClose}
+        title={alertDialog.title}
+        text={alertDialog.text}
+      />
     </>
   );
 }
