@@ -20,6 +20,9 @@
           "appId": "d2pbjka7l3geed",
           "type": "cicd"
         }
+      },
+      "auth": {
+        "ecommercenextjsc655fd27": {}
       }
     }
   }

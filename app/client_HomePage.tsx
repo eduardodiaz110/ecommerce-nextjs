@@ -3,16 +3,12 @@ import { Product } from "@/src/API";
 import CustomButton from "@/src/shared/components/CustomButton";
 import CustomHeader from "@/src/shared/components/Header";
 import ProductCard from "@/src/shared/components/ProductCard";
-import {
-  CircularProgress,
-  Skeleton,
-  Stack,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import { CircularProgress, Stack, useTheme } from "@mui/material";
 import Link from "next/link";
 import React from "react";
 import { useEffect } from "react";
+import ClientSinginPage from "./auth/signin/client_SigninPage";
+import { AuthContext } from "@/src/context/AuthContext";
 
 interface ClientHomePageProps {
   fetchProducts: () => Promise<Product[]>;

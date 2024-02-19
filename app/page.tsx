@@ -1,15 +1,17 @@
 import { generateServerClientUsingCookies } from "@aws-amplify/adapter-nextjs/api";
 import { cookies } from "next/headers";
 import * as queries from "@/src/graphql/queries";
-import config from "@/src/amplifyconfiguration.json";
 import ClientHomePage from "./client_HomePage";
+import config from "@/src/amplifyconfiguration.json";
+import { useContext } from "react";
+import { AuthContext } from "@/src/context/AuthContext";
 
 const cookiesClient = generateServerClientUsingCookies({
   config,
   cookies,
 });
 
-export default async function Home() {
+export default async function App() {
   const fetchProducts = async () => {
     "use server";
     const { data, errors } = await cookiesClient.graphql({

@@ -2,7 +2,9 @@
 import { Button, Stack, Typography } from "@mui/material";
 import theme from "../../../theme";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import Person2Icon from "@mui/icons-material/Person2";
 import { useRouter, usePathname } from "next/navigation";
+import { Person } from "@mui/icons-material";
 
 interface CustomHeaderProps {
   title: string;
@@ -14,6 +16,10 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ title }) => {
 
   const handleGoBack = () => {
     router.back();
+  };
+
+  const handleGoProfile = () => {
+    router.push("/auth/profile");
   };
 
   return (
@@ -28,11 +34,11 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ title }) => {
       <Stack
         flexDirection={"row"}
         alignItems={"center"}
-        alignContent={"flex-start"}
+        alignContent={"center"}
         width={"100%"}
       >
-        {!isHomePage && (
-          <Stack width={"15%"} alignItems={"center"} justifyContent={"center"}>
+        <Stack width={"20%"} alignItems={"center"} justifyContent={"center"}>
+          {!isHomePage && (
             <button
               onClick={handleGoBack}
               style={{
@@ -40,30 +46,6 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ title }) => {
                 border: "none",
                 zIndex: 10,
               }}
-              // variant="text"
-              // sx={{
-              //   justifyContent: "center",
-              //   alignItems: "center",
-              //   color: "#000",
-              //   width: "50px", // Ajusta el ancho según tus necesidades
-              //   height: "50px", // Ajusta la altura según tus necesidades
-              //   borderRadius: "50%",
-              //   boxShadow: "none",
-              //   backgroundColor: "transparent",
-              //   padding: "0px",
-              //   "&:hover": {
-              //     backgroundColor: "transparent",
-              //     boxShadow: "none",
-              //   },
-              //   "&:active": {
-              //     boxShadow: "none",
-              //     backgroundColor: "transparent",
-              //   },
-              //   "&:focus": {
-              //     boxShadow: "none",
-              //     backgroundColor: "transparent",
-              //   },
-              // }}
             >
               <div
                 style={{
@@ -95,15 +77,50 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ title }) => {
                 </div>
               </div>
             </button>
-          </Stack>
-        )}
-        <Stack
-          {...(!isHomePage && { marginLeft: "-15%" })}
-          width={"100%"}
-          justifyContent={"center"}
-          alignItems={"center"}
-        >
+          )}
+        </Stack>
+        <Stack width={"60%"} justifyContent={"center"} alignItems={"center"}>
           <Typography variant="h6">{title}</Typography>
+        </Stack>
+        <Stack width={"20%"} alignItems={"center"} justifyContent={"center"}>
+          <button
+            onClick={handleGoProfile}
+            style={{
+              backgroundColor: "transparent",
+              border: "none",
+              zIndex: 10,
+            }}
+          >
+            <div
+              style={{
+                backgroundColor: "#000",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                padding: "2px",
+                borderRadius: "50%",
+              }}
+            >
+              <div
+                style={{
+                  backgroundColor: "#fff",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  padding: "5px",
+                  borderRadius: "50%",
+                }}
+              >
+                <Person2Icon
+                  sx={{
+                    padding: "0px",
+                    margin: "0px",
+                    fontSize: "24px",
+                  }}
+                />
+              </div>
+            </div>
+          </button>
         </Stack>
       </Stack>
     </Stack>

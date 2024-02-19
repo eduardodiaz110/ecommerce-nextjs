@@ -4,7 +4,7 @@ import theme from "../../../theme";
 
 interface CustomButtonProps {
   text: string;
-  delete?: boolean; // Nuevo prop opcional
+  delete?: boolean;
 }
 
 const CustomButton = forwardRef(
