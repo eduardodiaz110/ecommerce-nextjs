@@ -49,7 +49,6 @@ export default function ClientAddProduct({
             <CustomTextField
               text="Precio*"
               name="price"
-              type="number"
               onChange={handleChange}
               placeholder="0.00"
             />

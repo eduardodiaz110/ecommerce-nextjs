@@ -24,11 +24,13 @@ export const AuthContext = createContext<AuthContextType>({
 });
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(false);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
   const fetchSession = async () => {
     try {
-      const session = await fetchAuthSession();
+      const session = await fetchAuthSession().catch((error) => {
+        console.log("error", error);
+      });
       console.log(session);
       setIsAuthenticated(session ? true : false);
     } catch (error) {
