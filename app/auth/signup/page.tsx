@@ -36,31 +36,6 @@ export default async function signupPage() {
     }
   };
 
-  // async function handleSignUp({
-  //   username,
-  //   password,
-  //   email,
-  //   phone_number,
-  // }: SignUpParameters) {
-  //   try {
-  //     const { isSignUpComplete, userId, nextStep } = await signUp({
-  //       username,
-  //       password,
-  //       options: {
-  //         userAttributes: {
-  //           email,
-  //           phone_number,
-  //         },
-  //         autoSignIn: true,
-  //       },
-  //     });
-
-  //     console.log(userId);
-  //   } catch (error) {
-  //     console.log("error signing up:", error);
-  //   }
-  // }
-
   return (
     <>
       <ClientSingupPage handleSignUp={handleSignUp} />

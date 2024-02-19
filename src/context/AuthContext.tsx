@@ -3,9 +3,7 @@ import React, { createContext, useState, useEffect, ReactNode } from "react";
 import { fetchAuthSession, getCurrentUser } from "aws-amplify/auth";
 import config from "@/src/amplifyconfiguration.json";
 import { Amplify } from "aws-amplify";
-import { Hub } from "aws-amplify/utils";
-import { useRouter } from "next/navigation";
-import ClientSinginPage from "@/app/auth/signin/client_SigninPage";
+import ClientSignPage from "@/app/auth/sign/client_SignPage";
 
 Amplify.configure(config);
 
@@ -29,18 +27,8 @@ export const AuthContext = createContext<AuthContextType>({
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
-
-  //   const fetchSession = async () => {
-  //     try {
-  //       const session = await fetchAuthSession().catch((error) => {
-  //         console.log("error", error);
-  //       });
-  //       console.log(session);
-  //       setIsAuthenticated(session ? true : false);
-  //     } catch (error) {
-  //       setIsAuthenticated(false);
-  //     }
-  //     };
+  const isAuthenticatedSessionStorage =
+    sessionStorage.getItem("isAuthenticated") || "false";
 
   const fetchSession = async () => {
     try {
@@ -48,28 +36,37 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         console.log("error", error);
       });
       if (session) {
+        setIsAuthenticated(true);
+        sessionStorage.setItem("isAuthenticated", "true");
         return true;
+      } else {
+        setIsAuthenticated(false);
+        sessionStorage.setItem("isAuthenticated", "false");
+        return false;
       }
-      //   setIsAuthenticated(session ? true : false);
     } catch (error) {
-      setIsAuthenticated(false);
+      console.log("error", error);
     }
   };
 
   useEffect(() => {
     console.log("isAuthenticated", isAuthenticated);
+    console.log("isAuthenticatedSessionStorage", isAuthenticatedSessionStorage);
   }, [isAuthenticated]);
 
   useEffect(() => {
     fetchSession();
-    console.log("fetchSession");
   }, []);
 
   return (
     <AuthContext.Provider
       value={{ isAuthenticated, setIsAuthenticated, fetchSession }}
     >
-      {isAuthenticated === false ? <ClientSinginPage /> : <>{children}</>}
+      {isAuthenticatedSessionStorage === "false" ? (
+        <ClientSignPage />
+      ) : (
+        <>{children}</>
+      )}
     </AuthContext.Provider>
   );
 };

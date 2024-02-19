@@ -2,7 +2,8 @@
 import CustomButton from "@/src/shared/components/CustomButton";
 import CustomTextField from "@/src/shared/components/CustomTextField";
 import CustomHeader from "@/src/shared/components/Header";
-import { Stack, useTheme } from "@mui/material";
+import { Stack, Typography, useTheme } from "@mui/material";
+import Link from "next/link";
 import { useState } from "react";
 
 interface FormData {

@@ -11,13 +11,18 @@ import { useState } from "react";
 
 export default function ClientProfilePage() {
   const { setIsAuthenticated, isAuthenticated } = React.useContext(AuthContext);
+  const [isLoadingPage, setIsLoadingPage] = useState(false);
 
   const handleSignOut = async () => {
+    setIsLoadingPage(true);
     try {
       await signOut();
       setIsAuthenticated(false);
+      sessionStorage.setItem("isAuthenticated", "false");
     } catch (error) {
       console.log("error signing out:", error);
+    } finally {
+      setIsLoadingPage(false);
     }
   };
 
@@ -39,7 +44,12 @@ export default function ClientProfilePage() {
           padding={1.5}
           marginTop={"auto"}
         >
-          <CustomButton text="Cerrar Sesión" delete onClick={handleSignOut} />
+          <CustomButton
+            disabled={isLoadingPage}
+            text="Cerrar Sesión"
+            delete
+            onClick={handleSignOut}
+          />
         </Stack>
       </Stack>
     </>
