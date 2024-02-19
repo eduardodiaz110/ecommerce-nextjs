@@ -58,4 +58,6 @@ const CustomAlertDialog = forwardRef(
   }
 );
 
+CustomAlertDialog.displayName = "CustomAlertDialog";
+
 export default CustomAlertDialog;

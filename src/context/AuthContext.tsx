@@ -28,10 +28,6 @@ export const AuthContext = createContext<AuthContextType>({
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
-  // const isAuthenticateddtorage =
-  //   typeof window === "undefined"
-  //     ? null
-  //     : sessionStorage.getItem("isAuthenticated") === "true";
   const fetchSession = async () => {
     try {
       const session = await fetchAuthSession().catch((error) => {
@@ -39,12 +35,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       });
       if (session) {
         setIsAuthenticated(true);
-        localStorage.setItem("isAuthenticated", "true");
 
         return true;
       } else {
         setIsAuthenticated(false);
-        localStorage.setItem("isAuthenticated", "false");
 
         return false;
       }
@@ -55,7 +49,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   useEffect(() => {
     console.log("isAuthenticated", isAuthenticated);
-    // console.log("isAuthenticatedlocalStorage", isAuthenticatedLocalStorage);
   }, [isAuthenticated]);
 
   useEffect(() => {

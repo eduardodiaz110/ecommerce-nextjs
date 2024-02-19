@@ -60,7 +60,6 @@ export default function ClientSignPage({}): React.JSX.Element {
       });
       if (nextStep.signInStep === "DONE") {
         setIsAuthenticated(true);
-        localStorage.setItem("isAuthenticated", "true");
 
         router.push("/");
       }
@@ -86,8 +85,6 @@ export default function ClientSignPage({}): React.JSX.Element {
       });
       if (userId) {
         setIsAuthenticated(true);
-        localStorage.setItem("isAuthenticated", "true");
-
         router.push("/");
       }
     } catch (error) {

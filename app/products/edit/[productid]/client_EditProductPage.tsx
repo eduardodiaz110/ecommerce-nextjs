@@ -95,7 +95,7 @@ export default function ClientEditProductPage({
 
   useEffect(() => {
     fetch();
-  }, [fetchProduct]);
+  }, [fetch, fetchProduct]);
 
   return (
     <>
