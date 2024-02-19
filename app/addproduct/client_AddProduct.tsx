@@ -2,12 +2,9 @@
 import CustomButton from "@/src/shared/components/CustomButton";
 import CustomTextField from "@/src/shared/components/CustomTextField";
 import CustomHeader from "@/src/shared/components/Header";
-import ProductCard from "@/src/shared/components/ProductCard";
-import theme from "@/src/theme";
-import { Button, Stack, useTheme } from "@mui/material";
-import Link from "next/link";
+import { Stack, useTheme } from "@mui/material";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 interface ClientAddProductProps {
   createProduct: (formData: FormData) => Promise<void>;

@@ -4,7 +4,7 @@ import CustomButton from "@/src/shared/components/CustomButton";
 import CustomTextField from "@/src/shared/components/CustomTextField";
 import CustomHeader from "@/src/shared/components/Header";
 import theme from "@/src/theme";
-import { Stack } from "@mui/material";
+import { CircularProgress, Stack } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -18,6 +18,7 @@ export default function ClientEditProductPage({
   fetchProduct,
 }: ClientEditProductPageProps) {
   const router = useRouter();
+  const [isLoadingPage, setIsLoadingPage] = useState(true);
   const [product, setProduct] = useState<Product | null>();
   const [formData, setFormData] = useState(new FormData());
 
@@ -31,6 +32,7 @@ export default function ClientEditProductPage({
     formData.set("price", product?.price?.toString() || "");
     formData.set("priceIva", (product?.price || 0 * 1.16).toFixed(2));
     setProduct(product);
+    setIsLoadingPage(false);
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,9 +60,9 @@ export default function ClientEditProductPage({
       <Stack minHeight={"100dvh"}>
         <CustomHeader title="Editar Articulo" />
 
-        <Stack padding={1.5}>
-          {product && (
-            <Stack spacing={1} padding={1.5}>
+        <Stack flex={1} padding={1.5}>
+          {!isLoadingPage ? (
+            <Stack spacing={1}>
               <CustomTextField
                 text="Nombre*"
                 name="name"
@@ -89,6 +91,15 @@ export default function ClientEditProductPage({
                 value={(price * 1.16).toFixed(2)}
                 disabled
               />
+            </Stack>
+          ) : (
+            <Stack
+              flex={1}
+              height={"100%"}
+              justifyContent={"center"}
+              alignItems={"center"}
+            >
+              <CircularProgress color="secondary" />
             </Stack>
           )}
         </Stack>

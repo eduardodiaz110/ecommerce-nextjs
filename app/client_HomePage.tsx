@@ -3,7 +3,13 @@ import { Product } from "@/src/API";
 import CustomButton from "@/src/shared/components/CustomButton";
 import CustomHeader from "@/src/shared/components/Header";
 import ProductCard from "@/src/shared/components/ProductCard";
-import { Stack, useTheme } from "@mui/material";
+import {
+  CircularProgress,
+  Skeleton,
+  Stack,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import Link from "next/link";
 import React from "react";
 import { useEffect } from "react";
@@ -16,6 +22,7 @@ export default function ClientHomePage({
   fetchProducts,
 }: ClientHomePageProps): React.JSX.Element {
   const theme = useTheme();
+  const [isLoadingPage, setIsLoadingPage] = React.useState(true);
   const [products, setProducts] = React.useState<Product[]>([]);
 
   useEffect(() => {
@@ -24,29 +31,38 @@ export default function ClientHomePage({
       setProducts(products);
     };
     fetch();
+    setIsLoadingPage(false);
   }, [fetchProducts]);
 
   return (
     <>
       <Stack minHeight={"100dvh"}>
         <CustomHeader title="Artículos" />
-
-        <Stack spacing={1} padding={1.5}>
-          {products.map((product) => {
-            return (
-              <div key={product.id}>
-                <Link
-                  href={`products/${product.id}`}
-                  style={{
-                    textDecoration: "none",
-                    color: theme.palette.text.primary,
-                  }}
-                >
-                  <ProductCard key={product.id} product={product} />
-                </Link>
-              </div>
-            );
-          })}
+        <Stack flex={1} padding={1.5}>
+          {!isLoadingPage ? (
+            <Stack spacing={1}>
+              {products.map((product) => {
+                return (
+                  <div key={product.id}>
+                    <Link
+                      href={`products/${product.id}`}
+                      style={{
+                        textDecoration: "none",
+                        color: theme.palette.text.primary,
+                      }}
+                      as={`/products/${product.id}`}
+                    >
+                      <ProductCard key={product.id} product={product} />
+                    </Link>
+                  </div>
+                );
+              })}
+            </Stack>
+          ) : (
+            <Stack flex={1} justifyContent={"center"} alignItems={"center"}>
+              <CircularProgress color="secondary" />
+            </Stack>
+          )}
         </Stack>
 
         <Stack
@@ -56,7 +72,7 @@ export default function ClientHomePage({
           padding={1.5}
           marginTop={"auto"}
         >
-          <Link href="/addproduct">
+          <Link href="/addproduct" as={"/addproduct"}>
             <CustomButton text="Add Product" />
           </Link>
         </Stack>

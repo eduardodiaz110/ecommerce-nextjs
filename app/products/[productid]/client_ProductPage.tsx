@@ -4,11 +4,9 @@ import CustomButton from "@/src/shared/components/CustomButton";
 import CustomTextField from "@/src/shared/components/CustomTextField";
 import CustomHeader from "@/src/shared/components/Header";
 import theme from "@/src/theme";
-import { Dialog, Stack, Typography } from "@mui/material";
-import { Client } from "aws-amplify/api";
+import { CircularProgress, Dialog, Stack, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import Link from "next/link";
 
 interface ClientProductPageProps {
   fetchProduct: () => Promise<Product | null>;
@@ -21,12 +19,14 @@ export default function ClientProductPage({
 }: ClientProductPageProps) {
   const router = useRouter();
 
+  const [isLoadingPage, setIsLoadingPage] = useState(true);
   const [product, setProduct] = useState<Product | null>();
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
 
   const fetch = async () => {
     const product = await fetchProduct();
     setProduct(product);
+    setIsLoadingPage(false);
   };
 
   useEffect(() => {
@@ -89,9 +89,9 @@ export default function ClientProductPage({
       <Stack minHeight={"100dvh"}>
         <CustomHeader title="Ver Articulo" />
 
-        {product && product.price ? (
-          <Stack spacing={1} padding={1.5}>
-            <Stack spacing={1} padding={1.5}>
+        <Stack flex={1} padding={1.5}>
+          {!isLoadingPage && product && product.price ? (
+            <Stack spacing={1}>
               <CustomTextField
                 text="Nombre*"
                 name="name"
@@ -125,10 +125,17 @@ export default function ClientProductPage({
                 shown
               />
             </Stack>
-          </Stack>
-        ) : (
-          <Typography>No se encontró el producto</Typography>
-        )}
+          ) : (
+            <Stack
+              flex={1}
+              height={"100%"}
+              justifyContent={"center"}
+              alignItems={"center"}
+            >
+              <CircularProgress color="secondary" />
+            </Stack>
+          )}
+        </Stack>
 
         <Stack
           height={"76px"}
