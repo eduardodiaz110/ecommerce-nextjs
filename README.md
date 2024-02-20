@@ -31,9 +31,9 @@ La aplicación estará disponible en http://localhost:3000.
 
 ## Estructura del Proyecto
 
-- pages/: Contiene las páginas de NextJS.
+- app/: Contiene las páginas de NextJS.
 - components/: Almacena componentes reutilizables.
-- styles/: Contiene archivos de estilos globales.
+- amplify/: Este directorio almacena todo el código del backend, incluyendo la configuración de AWS Amplify.
 
 ## Características Técnicas
 
