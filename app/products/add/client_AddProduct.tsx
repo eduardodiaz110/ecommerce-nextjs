@@ -68,7 +68,12 @@ export default function ClientAddProduct({
         <CustomHeader title="Nuevo Articulo" />
 
         <Stack spacing={1} padding={1.5}>
-          <CustomTextField text="Nombre*" name="name" onChange={handleChange} />
+          <CustomTextField
+            text="Nombre*"
+            placeholder="Nombre del artículo"
+            name="name"
+            onChange={handleChange}
+          />
 
           <CustomTextField
             text="Precio*"

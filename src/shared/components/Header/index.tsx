@@ -8,9 +8,15 @@ import { Person } from "@mui/icons-material";
 
 interface CustomHeaderProps {
   title: string;
+  back?: boolean;
+  profile?: boolean;
 }
 
-const CustomHeader: React.FC<CustomHeaderProps> = ({ title }) => {
+const CustomHeader: React.FC<CustomHeaderProps> = ({
+  title,
+  back,
+  profile,
+}) => {
   const router = useRouter();
   const isHomePage = usePathname() === "/";
 
@@ -38,7 +44,7 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ title }) => {
         width={"100%"}
       >
         <Stack width={"20%"} alignItems={"center"} justifyContent={"center"}>
-          {!isHomePage && (
+          {back && (
             <button
               onClick={handleGoBack}
               style={{
@@ -83,44 +89,46 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ title }) => {
           <Typography variant="h6">{title}</Typography>
         </Stack>
         <Stack width={"20%"} alignItems={"center"} justifyContent={"center"}>
-          <button
-            onClick={handleGoProfile}
-            style={{
-              backgroundColor: "transparent",
-              border: "none",
-              zIndex: 10,
-            }}
-          >
-            <div
+          {profile && (
+            <button
+              onClick={handleGoProfile}
               style={{
-                backgroundColor: "#000",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                padding: "2px",
-                borderRadius: "50%",
+                backgroundColor: "transparent",
+                border: "none",
+                zIndex: 10,
               }}
             >
               <div
                 style={{
-                  backgroundColor: "#fff",
+                  backgroundColor: "#000",
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
-                  padding: "5px",
+                  padding: "2px",
                   borderRadius: "50%",
                 }}
               >
-                <Person2Icon
-                  sx={{
-                    padding: "0px",
-                    margin: "0px",
-                    fontSize: "24px",
+                <div
+                  style={{
+                    backgroundColor: "#fff",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    padding: "5px",
+                    borderRadius: "50%",
                   }}
-                />
+                >
+                  <Person2Icon
+                    sx={{
+                      padding: "0px",
+                      margin: "0px",
+                      fontSize: "24px",
+                    }}
+                  />
+                </div>
               </div>
-            </div>
-          </button>
+            </button>
+          )}
         </Stack>
       </Stack>
     </Stack>

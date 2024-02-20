@@ -76,7 +76,7 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
   " .MuiOutlinedInput-root": {
     borderRadius: "0px",
     padding: "0px",
-    borderColor: "#FFFFFF",
+    // borderColor: "#FFFFFF",
     "& fieldset": {
       border: "none",
     },

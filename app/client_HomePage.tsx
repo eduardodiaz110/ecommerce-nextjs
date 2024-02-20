@@ -33,7 +33,7 @@ export default function ClientHomePage({
   return (
     <>
       <Stack minHeight={"100dvh"}>
-        <CustomHeader title="Artículos" />
+        <CustomHeader profile title="Artículos" />
         <Stack flex={1} padding={1.5}>
           {!isLoadingPage ? (
             <Stack spacing={1}>

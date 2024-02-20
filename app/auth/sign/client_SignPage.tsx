@@ -1,11 +1,17 @@
 "use client";
 import { AuthContext } from "@/src/context/AuthContext";
+import CustomAlertDialog from "@/src/shared/components/CustomAlertDialog";
 import CustomButton from "@/src/shared/components/CustomButton";
+import CustomFormDialog from "@/src/shared/components/CustomFormDialog";
 import CustomTextField from "@/src/shared/components/CustomTextField";
 import CustomHeader from "@/src/shared/components/Header";
 import { CircularProgress, Stack, Typography, useTheme } from "@mui/material";
-import { signIn, signUp } from "aws-amplify/auth";
-import Link from "next/link";
+import {
+  confirmSignUp,
+  resendSignUpCode,
+  signIn,
+  signUp,
+} from "aws-amplify/auth";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { useState } from "react";
@@ -15,19 +21,8 @@ interface FormData {
   password: string;
   email: string;
   phone_number: string;
+  verificationCode: string;
 }
-
-type SignUpParameters = {
-  username: string;
-  password: string;
-  email: string;
-  phone_number: string;
-};
-
-// interface ClientSignPageProps {
-//   handleSignUp: (formData: FormData) => Promise<void>;
-//   handleSignIn: (formData: FormData) => Promise<void>;
-// }
 
 export default function ClientSignPage({}): React.JSX.Element {
   const theme = useTheme();
@@ -41,6 +36,18 @@ export default function ClientSignPage({}): React.JSX.Element {
     password: "",
     email: "",
     phone_number: "",
+    verificationCode: "",
+  });
+  const [alertDialog, setAlertDialog] = useState({
+    open: false,
+    title: "",
+    text: "",
+    onClose: () => {},
+  });
+  const [confirmationCodeDialog, setConfirmationCodeDialog] = useState({
+    open: false,
+    title: "",
+    text: "",
   });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,19 +59,53 @@ export default function ClientSignPage({}): React.JSX.Element {
   };
 
   const handleSignIn = async (event: any) => {
+    if (!formData.email || !formData.password) {
+      setAlertDialog({
+        open: true,
+        title: "Error",
+        text: "Por favor, complete todos los campos.",
+        onClose: () => {
+          setAlertDialog((prevData) => ({
+            ...prevData,
+            open: false,
+          }));
+        },
+      });
+      return;
+    }
+
     setIsLoadingPage(true);
     try {
-      const { nextStep } = await signIn({
+      const { isSignedIn, nextStep } = await signIn({
         username: formData.email,
         password: formData.password,
       });
+      console.log("nextStep", nextStep);
+      console.log("isSignedIn", isSignedIn);
       if (nextStep.signInStep === "DONE") {
         setIsAuthenticated(true);
 
         router.push("/");
       }
+      if (nextStep.signInStep === "CONFIRM_SIGN_UP") {
+        setConfirmationCodeDialog({
+          open: true,
+          title: "Código de verificación",
+          text: "Ingresa el código de verificación que hemos enviado a tu correo.",
+        });
+      }
     } catch (error) {
-      console.log("error signing up:", error);
+      setAlertDialog({
+        open: true,
+        title: "Error",
+        text: "El usuario no existe. Regístrate para acceder al sistema.",
+        onClose: () => {
+          setAlertDialog((prevData) => ({
+            ...prevData,
+            open: false,
+          }));
+        },
+      });
     } finally {
       setIsLoadingPage(false);
     }
@@ -73,7 +114,7 @@ export default function ClientSignPage({}): React.JSX.Element {
   const handleSignUp = async (event: any) => {
     setIsLoadingPage(true);
     try {
-      const { isSignUpComplete, userId, nextStep } = await signUp({
+      const { isSignUpComplete, nextStep, userId } = await signUp({
         username: formData.email,
         password: formData.password,
         options: {
@@ -83,20 +124,72 @@ export default function ClientSignPage({}): React.JSX.Element {
           autoSignIn: true,
         },
       });
-      if (userId) {
-        setIsAuthenticated(true);
-        router.push("/");
+      if (nextStep.signUpStep === "CONFIRM_SIGN_UP") {
+        setConfirmationCodeDialog({
+          open: true,
+          title: "Código de verificación",
+          text: "Ingresa el código de verificación que hemos enviado a tu correo.",
+        });
       }
     } catch (error) {
       console.log("error signing up:", error);
+      setAlertDialog({
+        open: true,
+        title: "Error",
+        text: "El correo ya está registrado. Por favor, intenta con otro correo.",
+        onClose: () => {
+          setAlertDialog((prevData) => ({
+            ...prevData,
+            open: false,
+          }));
+        },
+      });
+      formData.email = "";
+      formData.password = "";
     } finally {
       setIsLoadingPage(false);
     }
   };
+
+  const handleVerificationCode = async (confirmationCode: string) => {
+    try {
+      await confirmSignUp({
+        username: formData.email,
+        confirmationCode: confirmationCode,
+      });
+
+      setAlertDialog({
+        open: true,
+        title: "Éxito",
+        text: "¡Tu cuenta ha sido verificada con éxito!",
+        onClose: () => {
+          setAlertDialog((prevData) => ({
+            ...prevData,
+            open: false,
+          }));
+        },
+      });
+      setIsAuthenticated(true);
+      router.push("/");
+    } catch (error) {
+      setAlertDialog({
+        open: true,
+        title: "Error",
+        text: "El código de verificación es incorrecto. Por favor, inténtalo nuevamente.",
+        onClose: () => {
+          setAlertDialog((prevData) => ({
+            ...prevData,
+            open: false,
+          }));
+        },
+      });
+    }
+  };
+
   return (
     <>
       <Stack height={"100dvh"}>
-        <CustomHeader title={"Inicia"} />
+        <CustomHeader title={"Control de Acceso"} />
 
         <Stack flex={1} padding={1.5}>
           {!isLoadingPage ? (
@@ -164,6 +257,55 @@ export default function ClientSignPage({}): React.JSX.Element {
           />
         </Stack>
       </Stack>
+      <CustomAlertDialog
+        open={alertDialog.open}
+        onClose={alertDialog.onClose}
+        title={alertDialog.title}
+        text={alertDialog.text}
+      />
+      <CustomFormDialog
+        open={confirmationCodeDialog.open}
+        title={confirmationCodeDialog.title}
+        text={confirmationCodeDialog.text}
+        onClose={() => {
+          setConfirmationCodeDialog((prevData) => ({
+            ...prevData,
+            open: false,
+          }));
+        }}
+        onAccept={() => handleVerificationCode(formData.verificationCode)}
+        form={
+          <Stack spacing={1.5}>
+            <CustomTextField
+              text="Código de verificación*"
+              name="verificationCode"
+              onChange={handleChange}
+            />
+            <button
+              style={{
+                backgroundColor: "transparent",
+                border: "none",
+                cursor: "pointer",
+                textDecoration: "underline",
+                opacity: 0.7,
+                textAlign: "left",
+                justifyContent: "left",
+                marginTop: "16px",
+                padding: 0,
+              }}
+              onClick={() => {
+                resendSignUpCode({
+                  username: formData.email,
+                }).catch((error) => {
+                  console.error("error resending code:", error);
+                });
+              }}
+            >
+              Reenviar código
+            </button>
+          </Stack>
+        }
+      />
     </>
   );
 }

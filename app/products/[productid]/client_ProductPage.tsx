@@ -32,7 +32,7 @@ export default function ClientProductPage({
 
   useEffect(() => {
     fetch();
-  }, [fetch, fetchProduct]);
+  }, []);
 
   return (
     <>
