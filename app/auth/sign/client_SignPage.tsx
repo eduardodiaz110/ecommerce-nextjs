@@ -112,6 +112,51 @@ export default function ClientSignPage({}): React.JSX.Element {
   };
 
   const handleSignUp = async (event: any) => {
+    if (!formData.email || !formData.password) {
+      setAlertDialog({
+        open: true,
+        title: "Error",
+        text: "Por favor, complete todos los campos.",
+        onClose: () => {
+          setAlertDialog((prevData) => ({
+            ...prevData,
+            open: false,
+          }));
+        },
+      });
+      return;
+    }
+
+    if (!formData.email.includes("@") || !formData.email.includes(".")) {
+      setAlertDialog({
+        open: true,
+        title: "Error",
+        text: "Por favor, ingresa un correo válido.",
+        onClose: () => {
+          setAlertDialog((prevData) => ({
+            ...prevData,
+            open: false,
+          }));
+        },
+      });
+      return;
+    }
+
+    if (formData.password.length < 8) {
+      setAlertDialog({
+        open: true,
+        title: "Error",
+        text: "La contraseña debe tener al menos 8 caracteres.",
+        onClose: () => {
+          setAlertDialog((prevData) => ({
+            ...prevData,
+            open: false,
+          }));
+        },
+      });
+      return;
+    }
+
     setIsLoadingPage(true);
     try {
       const { isSignUpComplete, nextStep, userId } = await signUp({
@@ -280,6 +325,7 @@ export default function ClientSignPage({}): React.JSX.Element {
           <Stack spacing={1.5}>
             <CustomTextField
               text="Código de verificación*"
+              placeholder="Código de verificación"
               name="verificationCode"
               onChange={handleChange}
             />
