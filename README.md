@@ -1,7 +1,5 @@
 # Ecommerce NextJS
 
-## Descripción del Proyecto
-
 Este proyecto es una aplicación web mobile desarrollada con NextJS, Material-UI (MUI), y AWS Amplify para la gestión de artículos en un sistema de comercio electrónico. La aplicación permite crear, actualizar, eliminar y visualizar artículos, siguiendo las especificaciones y consideraciones detalladas en el documento de proyecto.
 
 ## Requisitos
