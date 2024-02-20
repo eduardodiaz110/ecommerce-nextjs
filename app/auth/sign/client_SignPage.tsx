@@ -197,12 +197,14 @@ export default function ClientSignPage({}): React.JSX.Element {
               <CustomTextField
                 text="Correo*"
                 name="email"
+                placeholder="Correo electrónico"
                 onChange={handleChange}
                 value={formData.email}
               />
 
               <CustomTextField
                 text="Contraseña*"
+                placeholder="Contraseña"
                 name="password"
                 type="password"
                 onChange={handleChange}
