@@ -1,6 +1,5 @@
 import { getProduct } from "@/src/graphql/queries";
 import { generateServerClientUsingCookies } from "@aws-amplify/adapter-nextjs/api";
-import { Typography } from "@mui/material";
 import { cookies } from "next/headers";
 import config from "@/src/amplifyconfiguration.json";
 import ClientEditProductPage from "./client_EditProductPage";

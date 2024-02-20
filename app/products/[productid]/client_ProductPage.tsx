@@ -5,7 +5,7 @@ import CustomDeleteDialog from "@/src/shared/components/CustomDeleteDialog";
 import CustomTextField from "@/src/shared/components/CustomTextField";
 import CustomHeader from "@/src/shared/components/Header";
 import theme from "@/src/theme";
-import { CircularProgress, Dialog, Stack, Typography } from "@mui/material";
+import { CircularProgress, Stack } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -37,7 +37,7 @@ export default function ClientProductPage({
   return (
     <>
       <Stack minHeight={"100dvh"}>
-        <CustomHeader title="Ver Articulo" />
+        <CustomHeader back title="Ver Articulo" />
 
         <Stack flex={1} padding={1.5}>
           {!isLoadingPage && product && product.price ? (

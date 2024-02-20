@@ -100,7 +100,7 @@ export default function ClientEditProductPage({
   return (
     <>
       <Stack minHeight={"100dvh"}>
-        <CustomHeader title="Editar Articulo" />
+        <CustomHeader back title="Editar Articulo" />
 
         <Stack flex={1} padding={1.5}>
           {!isLoadingPage ? (

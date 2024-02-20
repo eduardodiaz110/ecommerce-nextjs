@@ -5,7 +5,7 @@ import CustomButton from "@/src/shared/components/CustomButton";
 import CustomHeader from "@/src/shared/components/Header";
 import theme from "@/src/theme";
 import { Stack, Typography } from "@mui/material";
-import { fetchAuthSession, signOut } from "aws-amplify/auth";
+import { signOut } from "aws-amplify/auth";
 import React from "react";
 import { useState } from "react";
 
@@ -28,7 +28,7 @@ export default function ClientProfilePage() {
   return (
     <>
       <Stack height={"100dvh"}>
-        <CustomHeader title="Perfil" />
+        <CustomHeader back title="Perfil" />
 
         <Stack flex={1} spacing={1} padding={1.5}>
           <Typography>

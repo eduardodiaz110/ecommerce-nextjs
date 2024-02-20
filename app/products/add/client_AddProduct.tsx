@@ -1,7 +1,6 @@
 "use client";
 import CustomAlertDialog from "@/src/shared/components/CustomAlertDialog";
 import CustomButton from "@/src/shared/components/CustomButton";
-import CustomDeleteDialog from "@/src/shared/components/CustomDeleteDialog";
 import CustomTextField from "@/src/shared/components/CustomTextField";
 import CustomHeader from "@/src/shared/components/Header";
 import { Stack, useTheme } from "@mui/material";
@@ -65,7 +64,7 @@ export default function ClientAddProduct({
   return (
     <>
       <Stack height={"100dvh"}>
-        <CustomHeader title="Nuevo Articulo" />
+        <CustomHeader back title="Nuevo Articulo" />
 
         <Stack spacing={1} padding={1.5}>
           <CustomTextField

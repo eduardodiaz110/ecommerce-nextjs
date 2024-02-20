@@ -3,8 +3,6 @@ import { cookies } from "next/headers";
 import * as queries from "@/src/graphql/queries";
 import ClientHomePage from "./client_HomePage";
 import config from "@/src/amplifyconfiguration.json";
-import { useContext } from "react";
-import { AuthContext } from "@/src/context/AuthContext";
 
 const cookiesClient = generateServerClientUsingCookies({
   config,

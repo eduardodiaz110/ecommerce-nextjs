@@ -7,8 +7,6 @@ import { CircularProgress, Stack, useTheme } from "@mui/material";
 import Link from "next/link";
 import React from "react";
 import { useEffect } from "react";
-import ClientSinginPage from "./auth/signin/client_SigninPage";
-import { AuthContext } from "@/src/context/AuthContext";
 
 interface ClientHomePageProps {
   fetchProducts: () => Promise<Product[]>;
