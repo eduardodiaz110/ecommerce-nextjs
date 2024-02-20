@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+##Ecommerce NextJS
 
-## Getting Started
+##Descripción del Proyecto
+Este proyecto es una aplicación web mobile desarrollada con NextJS, Material-UI (MUI), y AWS Amplify para la gestión de artículos en un sistema de comercio electrónico. La aplicación permite crear, actualizar, eliminar y visualizar artículos, siguiendo las especificaciones y consideraciones detalladas en el documento de proyecto.
 
-First, run the development server:
+##Requisitos
+Node.js (v14.1.0 o superior)
+npm (v6.14.0 o superior)
+Instalación
+Clona este repositorio: git clone [URL_DEL_REPOSITORIO]
+Entra al directorio del proyecto: cd ecommerce-nextjs
+Instala las dependencias: npm install
+Configuración de AWS Amplify
+Este proyecto utiliza AWS Amplify para la autenticación y el almacenamiento de datos. Asegúrate de configurar tu entorno de Amplify antes de ejecutar la aplicación. Ejecuta los siguientes comandos en la terminal:
 
-```bash
+bash
+Copy code
+amplify configure # Sigue las instrucciones para configurar tu cuenta de AWS
+amplify init # Configura tu entorno de Amplify
+amplify add api # Añade una API GraphQL para el almacenamiento de datos
+amplify push # Implementa los cambios en tu entorno Amplify
+Ejecución
+Una vez configurado Amplify, puedes ejecutar la aplicación con el siguiente comando:
+
+bash
+Copy code
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+La aplicación estará disponible en http://localhost:3000.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Estructura del Proyecto
+pages/: Contiene las páginas de NextJS.
+components/: Almacena componentes reutilizables.
+styles/: Contiene archivos de estilos globales.
+Características Técnicas
+Typescript: El proyecto está escrito en TypeScript para mejorar la robustez del código.
+Linters: Se utilizan linters para garantizar buenas prácticas de codificación.
+Next.js: La aplicación se construye sobre Next.js, aprovechando el SSR para una mejor experiencia de usuario.
+Material-UI (MUI): Se utiliza MUI para los estilos y componentes visuales.
+Características Funcionales Adicionales
+Persistencia de Artículos: Los artículos se guardan localmente para preservarlos entre sesiones.
+Validación de Nombre Único: Se impide el registro de artículos con nombres duplicados.
+Autenticación de Usuarios: Se implementa la autenticación de usuarios con AWS Cognito.
+Publicación en Internet: La aplicación se puede desplegar en un servidor web para acceder a ella a través de Internet.
+Pruebas Unitarias
+Se alienta la implementación de pruebas unitarias para garantizar la calidad del código. Puedes ejecutar las pruebas con el siguiente comando:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+bash
+Copy code
+npm test
+Notas Adicionales
+Asegúrate de tener las credenciales de AWS configuradas correctamente antes de utilizar Amplify.
+Si surgen problemas durante la configuración o ejecución, consulta la documentación específica de cada tecnología utilizada.
+¡Esperamos tu revisión y retroalimentación! Gracias por considerar este proyecto.
