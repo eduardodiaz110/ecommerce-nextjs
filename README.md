@@ -1,4 +1,4 @@
-### Ecommerce NextJS
+# Ecommerce NextJS
 
 ## Descripción del Proyecto
 
